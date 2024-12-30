@@ -8,7 +8,8 @@ file(GLOB IMAGES
 
 foreach(IMAGE ${IMAGES})
     get_filename_component(fname ${IMAGE} NAME)
-    configure_file(${IMAGE} ${CMAKE_CURRENT_BINARY_DIR}/images/${fname} COPYONLY)
+    configure_file(${IMAGE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/images/${fname} COPYONLY)
+    configure_file(${IMAGE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release/images/${fname} COPYONLY)
 endforeach()
 
 file(GLOB_RECURSE SHADER_SOURCES
@@ -31,7 +32,10 @@ else(WIN32)
 endif(WIN32)
 
 foreach(SHADER_SOURCE ${SHADER_SOURCES})
-    set(SHADER_DIR ${CMAKE_CURRENT_BINARY_DIR}/shaders)
+    configure_file(${SHADER_SOURCE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/shaders/${fname} COPYONLY)
+    configure_file(${SHADER_SOURCE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release/shaders/${fname} COPYONLY)
+
+    set(SHADER_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/shaders)
 
     if(WIN32)
         get_filename_component(fname ${SHADER_SOURCE} NAME)
